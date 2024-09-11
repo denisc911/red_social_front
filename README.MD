@@ -18,24 +18,24 @@ red_social_front/
 │   ├── assets/
 │   ├── components/
 │   │   ├── Auth/
-│   │   │   ├── Login.js
-│   │   │   ├── Register.js
+│   │   │   ├── Login.jsx
+│   │   │   ├── Register.jsx
 │   │   ├── Home/
-│   │   │   ├── Home.js
+│   │   │   ├── Home.jsx
 │   │   ├── Post/
-│   │   │   ├── AddPost.js
-│   │   │   ├── Post.js
-│   │   │   ├── PostDetail.js
-│   │   │   ├── AddComment.js
+│   │   │   ├── AddPost.jsx
+│   │   │   ├── Post.jsx
+│   │   │   ├── PostDetail.jsx
+│   │   │   ├── AddComment.jsx
 │   │   ├── Profile/
-│   │   │   ├── Profile.js
-│   │   ├── Header.js
-│   │   ├── Footer.js
+│   │   │   ├── Profile.jsx
+│   │   ├── Header.jsx
+│   │   ├── Footer.jsx
 │   ├── redux/
 │   │   ├── actions/
 │   │   ├── reducers/
-│   │   ├── store.js
-│   ├── App.js
+│   │   ├── store.jsx
+│   ├── App.jsx
 │   ├── index.js
 │   ├── styles/
 │   │   ├── main.scss
