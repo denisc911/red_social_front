@@ -6,9 +6,9 @@ import Home from './components/Home/Home.jsx';
 import Login from './components/Auth/Login.jsx';
 import Register from './components/Auth/Register.jsx';
 import Profile from './components/Profile/Profile.jsx';
-import AddPost from './components/Post/AddPost.jsx';
+import AddPost from './components/Post/AddPost.js';
 import PostDetail from './components/Post/PostDetail.jsx';
-import Header from './components/Header.jsx';
+import Header from './components/Theheader/TheHeader.jsx';
 import Footer from './components/Footer.jsx';
 
 function App() {
@@ -31,3 +31,5 @@ function App() {
 }
 
 export default App;
+
+
