@@ -10,7 +10,9 @@ import AddPost from './components/Post/AddPost.js';
 import PostDetail from './components/Post/PostDetail.jsx';
 import Header from './components/Theheader/TheHeader.jsx';
 import Footer from './components/Footer.jsx';
-
+import PrivateZone from './src/guards/PrivateZone.jsx';
+import AdminZone from './guards/AdminZone'
+import NotFound from './components/NotFound/NotFound';
 function App() {
   return (
     <Provider store={store}>
@@ -20,9 +22,14 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={
+            <PrivateZone>
+              <Profile />
+            </PrivateZone> } />
           <Route path="/add-post" element={<AddPost />} />
           <Route path="/post/:id" element={<PostDetail />} />
+          <Route path="/admin" element={ <AdminZone> <Admin /> </AdminZone>}/>
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </Router>
@@ -31,5 +38,3 @@ function App() {
 }
 
 export default App;
-
-
