@@ -50,7 +50,7 @@ red_social_front/
 
 1. Clona el repositorio:
     ```bash
-    git clone https://github.com/tu-usuario/my-social-app.git
+    git clone https://github.com/denisc911/red_social_front.git
     ```
 2. Navega al directorio del proyecto:
     ```bash
