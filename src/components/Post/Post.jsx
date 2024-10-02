@@ -1,19 +1,18 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import PostItem from './PostItem'; // Importamos el componente individual
 
-const Post = () => {
-  const { posts } = useSelector(state => state.posts);
-
+const Post = ({ posts }) => { // Ahora pasamos los posts como props
   return (
-    <>
-      {posts.map((post, index) => (
-        <div key={post._id} className="post">
-          <h2>Post nº {index}</h2>
-          <p>{post.content}</p>
-        </div>
-      ))}
-    </>
+    <div>
+      {posts.length > 0 ? (
+        posts.map((post, index) => (
+          <PostItem key={post._id} post={post} index={index} /> // Usamos el componente PostItem
+        ))
+      ) : (
+        <p>No hay publicaciones disponibles.</p> // Manejo de caso cuando no hay publicaciones
+      )}
+    </div>
   );
-}
+};
 
 export default Post;

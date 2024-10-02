@@ -1,21 +1,31 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { getAll } from '../../redux/posts/postsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllPosts, clearError } from '../../redux/posts/postsSlice';
 import Post from './Post';
 
 const Posts = () => {
   const dispatch = useDispatch();
+  const { posts, loading, error } = useSelector((state) => state.posts);
 
   useEffect(() => {
-    dispatch(getAll());
+    dispatch(getAllPosts());
+    return () => {
+      dispatch(clearError());
+    };
   }, [dispatch]);
 
   return (
     <div>
       <h1>Posts</h1>
-      <Post />
+      {loading ? (
+        <p>Cargando publicaciones...</p>
+      ) : error ? (
+        <p>Error al cargar publicaciones: {error}</p>
+      ) : (
+        <Post posts={posts} />
+      )}
     </div>
   );
-}
+};
 
 export default Posts;
