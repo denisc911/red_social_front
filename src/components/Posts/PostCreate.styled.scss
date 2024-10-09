@@ -1,0 +1,135 @@
+@import '../../assets/styles/tema'; // Asegúrate de importar los estilos del tema
+
+// Modal responsive
+.modal-content {
+  padding: 1rem;
+  margin: -2rem;
+  background-color: var(--background-color);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 600px;  // Tamaño máximo del modal para pantallas grandes
+  margin: 0 auto;    // Centrar el modal en la pantalla
+
+  @media (max-width: 768px) {
+    max-width: 100%;  // En pantallas móviles, que ocupe el 100% del ancho
+    padding: 15px;    // Reducir el padding en móviles
+  }
+
+  @media (max-width: 576px) {
+    padding: 10px;   // Reducir aún más el padding en pantallas muy pequeñas
+  }
+
+  .modal-title {
+    display: contents;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: var(--text-color);
+
+    @media (max-width: 768px) {
+      font-size: 1.5rem;  // Ajustar el tamaño de fuente en pantallas móviles
+    }
+
+    @media (max-width: 576px) {
+      font-size: 1.2rem;  // Reducir el tamaño de fuente en pantallas más pequeñas
+    }
+  }
+
+  .modal-form {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-color);
+
+    .modal-input,
+    .modal-textarea,
+    .modal-file-input {
+      background-color: var(--background-color);
+      color: var(--text-color);
+      margin-bottom: 15px;
+      padding: 10px;
+      border: 1px solid var(--hover-color);
+      border-radius: 2%;
+      font-size: 1rem;
+
+      @media (max-width: 768px) {
+        font-size: 0.9rem;  // Ajustar el tamaño de fuente en móviles
+      }
+
+      @media (max-width: 576px) {
+        font-size: 0.85rem; // Reducir el tamaño de fuente en pantallas más pequeñas
+      }
+
+      &:focus {
+        border-color: var(--text-color);
+        outline: none;
+        box-shadow: 0 0 5px var(--hover-color);
+      }
+    }
+
+    .modal-textarea {
+      height: 100px;
+      background-color: var(--background-color); // Ajustar la altura según sea necesario
+
+      @media (max-width: 768px) {
+        height: 80px;  // Reducir la altura en móviles
+      }
+
+      @media (max-width: 576px) {
+        height: 60px;  // Reducir más la altura en pantallas pequeñas
+      }
+    }
+
+    .modal-submit {
+      padding: 10px;
+      background-color: var(--background-color);
+      color: var(--header-background-color);
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: var(--hover-color);
+      }
+
+      &:disabled {
+        background-color: gray;
+        cursor: not-allowed;
+      }
+
+      @media (max-width: 768px) {
+        font-size: 0.9rem;  // Reducir tamaño en móviles
+      }
+
+      @media (max-width: 576px) {
+        font-size: 0.85rem; // Ajustar en pantallas pequeñas
+      }
+    }
+  }
+
+  .modal-error {
+    color: red;
+    margin-top: 15px;
+  }
+
+  .modal-close-button {
+    margin-top: 15px;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 1rem;
+
+    &:hover {
+      color: var(--hover-color);
+    }
+
+    @media (max-width: 768px) {
+      font-size: 0.9rem;  // Reducir tamaño en móviles
+    }
+
+    @media (max-width: 576px) {
+      font-size: 0.85rem; // Ajustar en pantallas pequeñas
+    }
+  }
+}

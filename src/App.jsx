@@ -1,60 +1,50 @@
-import React from 'react';
-import './styles/reset.scss'; 
-import { createRoot } from 'react-dom/client';
-import './styles/main.scss';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { store } from './redux/store.js';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import TheHeader from './components/TheHeader/TheHeader';
+import TheFooter from './components/TheFooter/TheFooter.jsx';
 import Home from './components/Home/Home';
-import Login from './components/Auth/Login';
-import Register from './components/Auth/Register';
+import Login from './components/Login/Login';
+import Register from './components/Register/Register';
 import Profile from './components/Profile/Profile';
-import AddPost from './components/Post/AddPosts';
-import PostDetail from './components/Post/PostDetail';
-import Header from './components/TheHeader/TheHeader';
-import Footer from './components/Footer/TheFooter';
-import PrivateZone from './guards/PrivateZone';
-import AdminZone from './guards/AdminZone';
+import PostDetail from './components/Posts/PostDetail';
+import Search from './components/Search/Search.jsx';
+import PrivateZone from './guards/PrivateZone.jsx';
 import NotFound from './components/NotFound/NotFound';
-import Admin from './components/Admin/Admin';
-import Search from './components/Search/Search'; // Nuevo componente
-// import TokenVerifier from './components/TokenVerifier/TokenVerifier'; // Nuevo componente
+import './App.scss'
+import React from 'react';
+
 
 function App() {
   return (
-    <Provider store={store}>
-      <Router>
-        <Header />
-        {/* <TokenVerifier> Verificación de token centralizada */}
+    <div className="app-container">
+      <BrowserRouter>
+        <TheHeader />
+        <div className="main-content">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route
-              path="/profile"
-              element={
-                <PrivateZone>
-                  <Profile />
-                </PrivateZone>
-              }
-            />
-            <Route path="/add-post" element={<AddPost />} />
-            <Route path="/post/:id" element={<PostDetail />} />
-            <Route
-              path="/admin"
-              element={
-                <AdminZone>
-                  <Admin />
-                </AdminZone>
-              }
-            />
-            <Route path="/search/:postName" element={<Search />} /> {/* Ruta de búsqueda */}
             <Route path="*" element={<NotFound />} />
+            
+            <Route path="/search/:postName" element={
+              <PrivateZone>
+                <Search />
+              </PrivateZone>
+            } />
+            <Route path="/profile" element={
+              <PrivateZone>
+                <Profile />
+              </PrivateZone>
+            } />
+            {/* <Route path="/posts/id/:_id" element={
+              <PrivateZone>
+                <PostDetail />
+              </PrivateZone>
+            } /> */}
+            <Route path="/login" element={<Login />} />
           </Routes>
-        {/* </TokenVerifier> */}
-        <Footer />
-      </Router>
-    </Provider>
+          <TheFooter />
+        </div>
+      </BrowserRouter>
+    </div>
   );
 }
 

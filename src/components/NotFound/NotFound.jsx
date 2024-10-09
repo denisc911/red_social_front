@@ -1,12 +1,8 @@
-import React from 'react';
-
+import  './NotFOund.styled.scss'
 const NotFound = () => {
-  return (
-    <div>
-      <h1>404 - Página no encontrada</h1>
-      <p>Que te andas inventando ;).</p>
+    return <div className="not-found-container">
+        <h2>404 Page not found</h2>
     </div>
-  );
-};
-
-export default NotFound;
+ }
+ 
+ export default NotFound

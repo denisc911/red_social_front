@@ -5,7 +5,6 @@ const Register = () => {
   const [password, setPassword] = useState('');
 
   const handleRegister = () => {
-    // Aquí deberías manejar el registro real
     console.log('User registered:', email);
   };
 

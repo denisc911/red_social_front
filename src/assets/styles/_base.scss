@@ -1,0 +1,40 @@
+body {
+  font-size: 1rem;
+  line-height: 1.5;
+  font-family: $font-stack;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: var(--link-hover-color);
+  }
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  font: inherit;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: var(--button-hover-background);
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}

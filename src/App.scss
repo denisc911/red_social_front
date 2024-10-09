@@ -1,0 +1,37 @@
+//App.scss
+@import './assets/styles/reset';
+@import './assets//styles/variables';
+@import './assets/styles/mixins';
+@import './assets/styles/plataformas';
+@import './assets/styles/base';
+@import './assets/styles/tema';
+
+.app-container {
+    width: 70%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: space-around;
+    align-items: center;
+  
+    @include respond-to('mobile') {
+      width: 100%;
+      padding: 0 1rem;
+    }
+  }
+  
+  .main-content {
+    width: 125%;
+    margin-left: 60%;
+  
+    @include respond-to('tablet') {
+      width: 80%;
+      margin-left: 20%;
+    }
+  
+    @include respond-to('mobile') {
+      width: 100%;
+      margin-left: 0;
+    }
+  }

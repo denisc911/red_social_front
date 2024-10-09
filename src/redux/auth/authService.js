@@ -1,84 +1,129 @@
-// src/redux/auth/authService.js
+import axios from 'axios';
 
-const AUTH_TOKEN_KEY = 'authToken'; // Clave para almacenar el token en el localStorage
+const API_URL = import.meta.env.VITE_API_URL;
 
-const authService = {
-  // Función para obtener el token del localStorage
-  getToken() {
-    return localStorage.getItem(AUTH_TOKEN_KEY);
-  },
+const register = async (userData) => {
+  const res = await axios.post(`${API_URL}/users/register`, userData)
+  return res.data
+}
 
-  // Función para guardar el token en el localStorage
-  setToken(token) {
-    localStorage.setItem(AUTH_TOKEN_KEY, token);
-  },
+const login = async (userData) => {
+  const res = await axios.post(`${API_URL}/users/login`, userData);
 
-  // Función para eliminar el token del localStorage (logout)
-  removeToken() {
-    localStorage.removeItem(AUTH_TOKEN_KEY);
-  },
+  if (res.data) {
+    localStorage.setItem('user', JSON.stringify(res.data.user));
+    localStorage.setItem('token', res.data.token);
+  }
+  return res.data;
+};
 
-  // Función para iniciar sesión
-  async login(credentials) {
-    const response = await fetch('http://tu-api.com/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(credentials),
-    });
+const logout = async () => {
+  const token = localStorage.getItem('token');
 
-    if (!response.ok) {
-      throw new Error('Error al iniciar sesión');
-    }
-
-    const data = await response.json();
-    this.setToken(data.token); // Guardamos el token en localStorage
-    return data;
-  },
-
-  // Función para registrarse
-  async register(userData) {
-    const response = await fetch('http://tu-api.com/api/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData),
-    });
-
-    if (!response.ok) {
-      throw new Error('Error al registrarse');
-    }
-
-    return await response.json();
-  },
-
-  // Función para verificar el token
-  async verifyToken(token) {
+  if (token) {
     try {
-      const response = await fetch('http://tu-api.com/api/verify-token', {
-        method: 'POST',
+      const res = await axios.delete(`${API_URL}/users/logout`, {
         headers: {
-          'Content-Type': 'application/json',
+          Authorization: token, 
         },
-        body: JSON.stringify({ token }),
       });
 
-      if (!response.ok) {
-        console.error('Error al verificar el token', response.status);
-        return false;
+      if (res.data) {
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
       }
-
-      const data = await response.json();
-      return data?.isValid ?? false; // Verificar si data.isValid está definido, si no, retorna false
+      return res.data;
     } catch (error) {
-      console.error('Error al hacer la solicitud de verificación del token', error);
-      return false;
+      console.error("Error durante el logout:", error);
+      throw new Error("Error al cerrar sesión. Intenta de nuevo.");
     }
-  },
-  
-  // Otras funciones relacionadas con la autenticación pueden añadirse aquí...
+  }
+};
+
+const getToken = () => {
+  const token = localStorage.getItem('token');
+  if (!token) return null;
+
+  try {
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    const currentTime = Date.now() / 1000;
+
+    if (decodedToken.exp < currentTime) {
+      localStorage.clear();
+      return null;
+    }
+  } catch (error) {
+    console.error('Error al decodificar el token', error);
+    localStorage.clear();
+    return null;
+  }
+
+  return token;
+};
+
+const updateUser = async (userData) => {
+  const token = localStorage.getItem('token');
+  const config = {
+    headers: {
+      Authorization: token,
+      'Content-Type': 'multipart/form-data',
+    },
+  };
+
+  const response = await axios.put(`${API_URL}/users/id/${userData.id}`, userData.data, config);
+  return response.data.user;
+};
+
+const followUser = async (userId) => {
+  const token = localStorage.getItem('token');
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+  };
+
+  if (!userId) {
+    throw new Error('El ID del usuario a seguir es undefined o null');
+  }
+
+  try {
+    const res = await axios.put(`${API_URL}/users/follow/${userId}`, {}, config);
+    return res.data;
+  } catch (error) {
+    console.error("Error al seguir al usuario:", error);
+    throw new Error("Error al seguir al usuario. Intenta de nuevo.");
+  }
+};
+
+const unfollowUser = async (userId) => {
+  const token = localStorage.getItem('token');
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+  };
+
+  if (!userId) {
+    throw new Error('El ID del usuario a dejar de seguir es undefined o null');
+  }
+
+  try {
+    const res = await axios.put(`${API_URL}/users/unfollow/${userId}`, {}, config);
+    return res.data;
+  } catch (error) {
+    console.error("Error al dejar de seguir al usuario:", error);
+    throw new Error("Error al dejar de seguir al usuario. Intenta de nuevo.");
+  }
+};
+
+const authService = {
+  register,
+  login,
+  logout,
+  getToken,
+  updateUser,
+  followUser,
+  unfollowUser
 };
 
 export default authService;

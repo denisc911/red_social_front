@@ -1,13 +1,13 @@
-import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './reducers/userSlice'; // Ajusta la ruta según tu estructura de archivos
-import postReducer from './reducers/postSlice'; // Ajusta la ruta según tu estructura de archivos
+import { configureStore } from '@reduxjs/toolkit'
+import auth from '../redux/auth/authSlice'
+import posts from '../redux/posts/postsSlice'
+import comments from '../redux/comments/commentsSlice'
 
-// Configuración del store
+
 export const store = configureStore({
   reducer: {
-    user: userReducer, // Reducer para manejar estado del usuario
-    post: postReducer, // Reducer para manejar estado de los posts
+    auth,
+    posts, 
+    comments
   },
-});
-
-export default store;
+})

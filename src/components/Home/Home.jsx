@@ -1,12 +1,14 @@
-import React from 'react';
+import React from 'react'
+import PostList from '../Posts/PostList'
+import './Home.styled.scss'
 
 const Home = () => {
   return (
-    <div>
-      <h1>Home</h1>
-      {/* Aquí agregarás la lógica para mostrar publicaciones */}
+    <div className='homeBody'>
+      <h1>Posts</h1>
+      <PostList/>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

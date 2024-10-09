@@ -11,4 +11,3 @@ const user = JSON.parse(localStorage.getItem('user'))
        state.token = null
      })
  }
-

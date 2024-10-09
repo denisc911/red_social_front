@@ -8,4 +8,3 @@ const logout = async () => {
       if (res.data) localStorage.clear()
      return res.data
     }
-    
