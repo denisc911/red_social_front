@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserPosts, updatePost, deletePost } from '../../redux/posts/postsSlice';
+import { getUserPosts, updatePostLikes, deletePost } from '../../redux/posts/postsSlice';
 import { updateUser, reset } from '../../redux/auth/authSlice';
 import { Tabs, Spin, Avatar, Input, Button, Upload, notification, Card, Modal } from 'antd';
 import './Profile.styled.scss';
@@ -92,14 +92,14 @@ const Profile = () => {
     const updatedData = new FormData();
     updatedData.append('title', postTitle);
     updatedData.append('body', postBody);
-    
+
     // Always append postImage whether creating or updating a post
     if (postImage) {
       updatedData.append('image', postImage);
     }
 
     if (currentPost) {
-      dispatch(updatePost({ id: currentPost._id, data: updatedData }))
+      dispatch(updatePostLikes({ id: currentPost._id, data: updatedData }))
         .unwrap()
         .then(() => {
           notification.success({ message: 'Post updated successfully' });

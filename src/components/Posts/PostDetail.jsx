@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getById, likePost, updatePostLikes } from '../../redux/posts/postsSlice';
 import { useParams } from 'react-router-dom';
 import { Card, notification, Input, Button } from 'antd';
-import { HeartOutlined, HeartFilled, LikeOutlined, LikeFilled, DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import commentsService from '../../redux/comments/commentsService';
 import { likeComment, unlikeComment } from '../../redux/comments/commentsSlice';
 import FollowButton from '../FollowButton/FollowButton';
@@ -216,11 +216,11 @@ const PostDetail = () => {
               <Meta title={comment.userId ? comment.userId.username : "Usuario desconocido"} description={comment.comment} />
               <div className="comment-content">
                 <Button className="like-button" onClick={() => handleCommentLike(comment._id)}>
-                  {comment.likes && comment.likes.includes(user?._id) ? <LikeFilled/> : <LikeOutlined />} 
+                  {comment.likes && comment.likes.includes(user?._id) ? <HeartFilled/> : <HeartOutlined />} 
                   {comment.likes ? comment.likes.length : 0} Likes
                 </Button>
-                <Button onClick={() => handleEditComment(comment._id, comment.comment)}><EditOutlined/>Editar</Button>
-                <Button onClick={() => handleDeleteComment(comment._id)}><DeleteOutlined/>Eliminar</Button>
+                <Button onClick={() => handleEditComment(comment._id, comment.comment)}>Editar</Button>
+                <Button onClick={() => handleDeleteComment(comment._id)}>Eliminar</Button>
               </div>
             </Card>
           ))

@@ -155,5 +155,5 @@ const postsSlice = createSlice({
 
 // Exportar las acciones necesarias
 export const { updatePostLikes } = postsSlice.actions;
-export { getPosts as getAll, deletePost }; // Añadido deletePost
+export { getPosts as getAll}; 
 export default postsSlice.reducer;

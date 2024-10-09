@@ -1,54 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/auth/authSlice';
+import { HomeOutlined, LoginOutlined, UserAddOutlined, UserOutlined, LogoutOutlined, SearchOutlined, PlusOutlined } from '@ant-design/icons';
 import PostCreate from '../Posts/PostCreate';
 import { Modal } from 'antd';
-import { SearchOutlined, PlusOutlined, LogoutOutlined, LoginOutlined, UserOutlined, UserAddOutlined, MoonFilled, SunFilled } from '@ant-design/icons';
-import './TheHeader.styled.scss';
+import './TheHeader.scss';
 
-const TheHeader = () => {
+const AuthLinks = ({ loggedIn, onLogout, userName }) => (
+  <>
+    {loggedIn ? (
+      <>
+        <Link to="/profile">
+          <UserOutlined /> Profile {userName}
+        </Link>
+        <button onClick={onLogout}>
+          <LogoutOutlined /> Logout
+        </button>
+      </>
+    ) : (
+      <>
+        <Link to="/login">
+          <LoginOutlined /> Login
+        </Link>
+        <Link to="/register">
+          <UserAddOutlined /> Register
+        </Link>
+      </>
+    )}
+  </>
+);
+
+const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  
-  // Estado para manejar el texto de búsqueda
+  const loggedIn = !!user;
+
   const [searchText, setSearchText] = useState('');
-  
-  // Estado para controlar el modal de creación de post
   const [showCreatePost, setShowCreatePost] = useState(false);
-
-  // Estado para controlar el modal de búsqueda
   const [showSearchModal, setShowSearchModal] = useState(false);
-  
-  // Estado para el tema oscuro/claro
-  const [darkMode, setDarkMode] = useState(localStorage.getItem('theme') === 'dark');
-  
-  useEffect(() => {
-    if (darkMode) {
-      document.body.classList.add('dark-theme');
-      document.body.classList.remove('light-theme');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.body.classList.add('light-theme');
-      document.body.classList.remove('dark-theme');
-      localStorage.setItem('theme', 'light');
-    }
-  }, [darkMode]);
 
-  const toggleTheme = () => {
-    setDarkMode(!darkMode);
-  };
-
-  const onLogout = async (e) => {
-    e.preventDefault();
+  const handleLogout = useCallback(async () => {
     try {
       await dispatch(logout()).unwrap();
       navigate('/login');
     } catch (error) {
       console.error("Error durante el logout:", error);
     }
-  };
+  }, [dispatch, navigate]);
 
   const handleCreatePostModal = () => {
     setShowCreatePost(true);
@@ -57,19 +57,19 @@ const TheHeader = () => {
   const handleSearch = () => {
     if (searchText.trim()) {
       navigate(`/search/${encodeURIComponent(searchText)}`);
-      setShowSearchModal(false);  // Cierra el modal después de buscar
+      setShowSearchModal(false);
     }
   };
 
   return (
-    <aside className="sidebar">
-      <div className="sidebar-header">
-      <Link to="/" className="sidebar-title">PUBLICAPP</Link>
-      </div>
-      <div className="sidebar-menu">
+    <header>
+      <nav>
+        <Link to="/">
+          <HomeOutlined /> Home
+        </Link>
+
         <button onClick={() => setShowSearchModal(true)} className="button secondary">
-          <SearchOutlined className="icon" />
-          <span className="text">Buscar</span>
+          <SearchOutlined /> Buscar
         </button>
 
         <Modal
@@ -77,7 +77,6 @@ const TheHeader = () => {
           open={showSearchModal}
           onCancel={() => setShowSearchModal(false)}
           footer={null}
-          className="modal"
         >
           <input
             placeholder="Escribe tu búsqueda"
@@ -88,13 +87,13 @@ const TheHeader = () => {
           />
         </Modal>
 
-        {user ? (
+        {loggedIn && (
           <>
             <button onClick={handleCreatePostModal} className="button primary">
-              <PlusOutlined className="icon" />
-              <span className="text">Crear</span>
+              <PlusOutlined /> Crear
             </button>
-            <Modal 
+
+            <Modal
               open={showCreatePost}
               onCancel={() => setShowCreatePost(false)}
               footer={null}
@@ -102,33 +101,13 @@ const TheHeader = () => {
             >
               <PostCreate onClose={() => setShowCreatePost(false)} />
             </Modal>
-            <button onClick={onLogout} className="button secondary">
-              <LogoutOutlined className="icon" />
-              <span className="text">Logout</span>
-            </button>
-            <Link to="/profile" className="button outlined">
-              <UserOutlined className="icon" />
-              <span className="text">Profile {user.name}</span>
-            </Link>
-          </>
-        ) : (
-          <>
-            <Link to="/login" className="button outlined">
-              <LoginOutlined className="icon" />
-              <span className="text">Login</span>
-            </Link>
-            <Link to="/register" className="button outlined">
-              <UserAddOutlined className="icon" />
-              <span className="text">Register</span>
-            </Link>
           </>
         )}
-        <button onClick={toggleTheme}>
-          {darkMode ? <MoonFilled className='moon' /> : <SunFilled className='sun' />}
-        </button>
-      </div>
-    </aside>
+
+        <AuthLinks loggedIn={loggedIn} onLogout={handleLogout} userName={user?.name} />
+      </nav>
+    </header>
   );
 };
 
-export default TheHeader;
+export default Header;
