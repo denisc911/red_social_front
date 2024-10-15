@@ -1,23 +1,36 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { login } from '../../redux/auth/authSlice';
+// import { useDispatch } from 'react-redux';
+// import { login } from '../../redux/auth/authSlice'; // Comentado temporalmente
 import './Login.styled.scss';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch(); // Comentado temporalmente
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Para ahora, solo mostrar la información en consola:
+    console.log('Login attempt with email:', email, 'and password:', password);
+
+    // Comentado temporalmente para que no haga la solicitud al backend:
+    /*
     try {
       await dispatch(login({ email, password })).unwrap();
       navigate('/');
     } catch (error) {
       console.error('Login failed:', error);
     }
+    */
+
+    // Simular un login exitoso por ahora:
+    setTimeout(() => {
+      console.log('Simulación de login exitoso');
+      navigate('/'); // Simular redireccionamiento al home después del login
+    }, 1000);
   };
 
   return (

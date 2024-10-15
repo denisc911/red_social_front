@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPosts, likePost, unlikePost } from '../../redux/posts/postsSlice';
+import {getAll, likePost, unlikePost } from '../../redux/posts/postsSlice';
 import { Card, Button, notification } from 'antd';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import './PostList.styled.scss';
@@ -13,7 +13,7 @@ const PostList = () => {
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    dispatch(getPosts());
+    dispatch(getAll());
   }, [dispatch]);
 
   const handleLike = async (post) => {
@@ -31,7 +31,7 @@ const PostList = () => {
       });
     } catch (error) {
       console.error('Error al dar/quitar like al post:', error);
-      notification.error({ message: 'Error al dar/quitar like al post', description: error.message });
+      notification.error({ message: 'Error en el intento de modificar tu like al post', description: error.message });
     }
   };
 

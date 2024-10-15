@@ -12,7 +12,9 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap; /* Permite que los elementos se ajusten en vista móvil */
+  flex-wrap: nowrap; /* Evitar que los elementos se ajusten en vista escritorio */
+  overflow-x: auto;  /* Añadir desplazamiento horizontal si es necesario */
+  padding: 5px 0;
 }
 
 nav a, nav button {
@@ -25,6 +27,13 @@ nav a, nav button {
   cursor: pointer;
   display: flex;
   align-items: center;
+  white-space: nowrap;  /* Asegurarse de que los enlaces no se dividan en varias líneas */
+}
+
+nav a {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 nav button:hover, nav a:hover {
